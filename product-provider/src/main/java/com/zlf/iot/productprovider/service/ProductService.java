@@ -15,7 +15,7 @@ import java.util.List;
 public interface ProductService {
 
     /**
-      * @Description: todo
+      * @Description: 创建产品
       * @Date: 2022/2/27 9:49 上午
       * @Param null:
       **/
