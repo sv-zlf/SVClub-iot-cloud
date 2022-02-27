@@ -29,7 +29,19 @@ public interface ProductService {
      **/
     List<Product> getProduct(int start, int pageSize);
 
-    Boolean deleteProduct(String productKey);
+    /**
+     * @Description: 通过产品密钥删除指定产品信息
+     * @Date: 2022/2/27 10:35 上午
+     * @Param productKey:
+     **/
+    Boolean deleteProduct0(String productKey);
+
+    /**
+     * @Description: 通过产品名字删除指定产品信息
+     * @Date: 2022/2/27 10:37 上午
+     * @Param productName:
+     **/
+    Boolean deleteProduct1(String productName);
 
     /**
      * @Description: 用产品名字获取指定产品信息
@@ -45,6 +57,14 @@ public interface ProductService {
      **/
     Product getdetail_productKey(String productKey);
 
+    /**
+     * @Description: 更新产品名称和产品描述
+     * @Date: 2022/2/27 10:52 上午
+     * @Param productKey:
+     * @Param productName:
+     * @Param productMessage:
+     **/
+    Boolean updateProduct(String productKey,String productName,String productMessage);
 
     int getProductCount();
 

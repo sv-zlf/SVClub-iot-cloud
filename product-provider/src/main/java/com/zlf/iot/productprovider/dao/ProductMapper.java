@@ -22,7 +22,10 @@ public interface ProductMapper {
     List<Product> getProduct(@Param("start") int start, @Param("pageSize") int pageSize);
 
     @Delete("delete from product where  productKey=#{productKey}")
-    Boolean deleteProduct(@Param("productKey") String productKey);
+    Boolean deleteProduct0(@Param("productKey") String productKey);
+
+    @Delete("delete from product where productName=#{productName}")
+    Boolean deleteProduct1(@Param("productName") String productName);
 
     @Select("select * from product where productName=#{productName}")
     Product getdetail_productName(@Param("productName") String productName);
@@ -35,4 +38,7 @@ public interface ProductMapper {
 
     @Select("select * from product")
     List<Product> getAllProduct();
+
+    @Update("update product set productMessage=#{productMessage},productName=#{productName} where productKey=#{productKey}" )
+    Boolean updateProduct(@Param("productKey") String productKey,@Param("productName") String productName,@Param("productMessage") String productMessage);
 }

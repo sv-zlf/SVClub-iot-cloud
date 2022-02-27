@@ -28,12 +28,12 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    private   GlobalResult result;
 
     @PostMapping("")
     @ApiOperation(value = "创建产品")
-    public GlobalResult createProduct( @RequestBody Product product) {
+    public GlobalResult createProduct(@RequestBody Product product) {
 
-        GlobalResult result;
         if (productService.getdetail_productName(product.getProductName())!=null) {
             result = GlobalResult.build(500, "该产品已存在", null);
         }
@@ -52,7 +52,7 @@ public class ProductController {
     @GetMapping("")
     @ApiOperation(value = "获取产品信息")
     public GlobalResult getProduct(@RequestParam int pageIndex,@RequestParam int pageSize){
-        GlobalResult result;
+
        int start=(pageIndex-1)*pageSize;
 
        try {
@@ -72,13 +72,39 @@ public class ProductController {
     }
 
 
-    @DeleteMapping("")
+    @PutMapping("/productKey/{productKey}")
+    @ApiOperation(value = "更新产品信息")
+    public GlobalResult updateProduct(@PathVariable String productKey,@RequestParam String productName,@RequestParam String productMessage) {
+
+        if (productService.getdetail_productName(productName)!=null){
+            result = GlobalResult.build(500, "该产品名称已存在， 请更换名字",null);
+            return result;
+        }
+        if (productService.getdetail_productKey(productKey)!=null){
+            try {
+                if (productService.updateProduct(productKey,productName,productMessage)) {
+                    Product product=productService.getdetail_productKey(productKey);
+                    result = GlobalResult.build(200, "更新产品信息成功",product);
+                } else{
+                    result = GlobalResult.build(500, "更新产品信息成功",null);
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                result = GlobalResult.build(500, "更新产品信息失败，异常",null);
+            }
+        }
+        else{
+            result = GlobalResult.build(500, "该产品密钥不正确，更新信息失败",null);
+        }
+        return result;
+    }
+    @DeleteMapping("/productKey/{productKey}")
     @ApiOperation(value = "删除产品")
-    public GlobalResult deleteProduct(@RequestParam String productKey) {
-        GlobalResult result ;
+    public GlobalResult deleteProduct0(@PathVariable String productKey) {
 
         try {
-           if(productService.deleteProduct(productKey)){
+           if(productService.deleteProduct0(productKey)){
                result = GlobalResult.build(200, "删除产品成功",null);
            }
            else {
@@ -91,10 +117,27 @@ public class ProductController {
         return result;
     }
 
-    @PostMapping("/productName/{productName}")
+    @DeleteMapping("/productName/{productName}")
+    @ApiOperation(value = "删除产品")
+    public GlobalResult deleteProduct1(@PathVariable String productName) {
+
+        try {
+            if(productService.deleteProduct1(productName)){
+                result = GlobalResult.build(200, "删除产品成功",null);
+            }
+            else {
+                result = GlobalResult.build(500, "删除产品失败",null);
+            }
+        }
+        catch (Exception e){
+            result = GlobalResult.build(500, "删除产品失败",null);
+        }
+        return result;
+    }
+    @GetMapping("/productName/{productName}")
     @ApiOperation(value = "查看产品详细信息")
     public GlobalResult checkProduct(@PathVariable String productName) {
-        GlobalResult result;
+
         try {
             Product product=productService.getdetail_productName(productName);
             if (product!=null) {
@@ -109,10 +152,10 @@ public class ProductController {
         }
         return result;
     }
-    @PostMapping("/productKey/{productKey}")
+    @GetMapping("/productKey/{productKey}")
     @ApiOperation(value = "查看产品详细信息")
     public GlobalResult getPro_detail(@PathVariable String productKey) {
-        GlobalResult result;
+
         try {
             Product product=productService.getdetail_productKey(productKey);
             if (product!=null) {

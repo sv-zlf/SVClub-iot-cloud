@@ -47,10 +47,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Boolean deleteProduct(String productKey) {
-       return productMapper.deleteProduct(productKey);
+    public Boolean deleteProduct0(String productKey) {
+       return productMapper.deleteProduct0(productKey);
     }
 
+    @Override
+    public Boolean deleteProduct1(String productName){
+        return productMapper.deleteProduct1(productName);
+    }
     @Override
     public Product getdetail_productName(String productName) {
         return productMapper.getdetail_productName(productName);
@@ -59,6 +63,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getdetail_productKey(String productKey) {
         return productMapper.getdetail_productKey(productKey);
+    }
+
+    @Override
+    public  Boolean updateProduct(String productKey,String productName,String productMessage){
+        return productMapper.updateProduct(productKey,productName,productMessage);
     }
     @Override
     public int getProductCount() {
