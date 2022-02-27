@@ -1,0 +1,15 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+    # ${server.port}为该服务的端口号
+
+server:
+  port: 8765
+spring:
+  application:
+    name: api-consumer
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

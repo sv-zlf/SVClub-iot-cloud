@@ -1,0 +1,32 @@
+server:
+  port: 8880
+spring:
+  application:
+    name: gateway-server
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true
+      routes:
+        - id: oauth-server
+          uri: lb://oauth-server
+          predicates:
+            - Path=/oauth/**
+        - id: product-provider
+          uri: lb://product-provider
+          predicates:
+            - Path=/product/**,device/**
+
+  #    nacos:
+  #      discovery:
+  #        server-addr: localhost:8848
+  main:
+    allow-bean-definition-overriding: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
