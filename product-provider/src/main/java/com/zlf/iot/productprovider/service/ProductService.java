@@ -66,7 +66,13 @@ public interface ProductService {
      **/
     Boolean updateProduct(String productKey,String productName,String productMessage);
 
+    /**
+     * @Description: 批量删除产品
+     * @Date: 2022/2/27 7:58 下午
+     * @Param productKeys:
+     **/
+    int deleteProducts(List<String> productKeys);
+
     int getProductCount();
 
-    List<Product> getAllProduct();
 }

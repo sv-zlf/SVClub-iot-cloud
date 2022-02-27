@@ -134,6 +134,21 @@ public class ProductController {
         }
         return result;
     }
+
+    @DeleteMapping("")
+    @ApiOperation(value = "删除产品")
+    public GlobalResult deleteProducts(@RequestParam List<String> productKeys) {
+
+        try {
+            int num= productService.deleteProducts(productKeys);
+            result =GlobalResult.build(200, "删除产品成功",num);
+        }
+        catch (Exception e){
+            result = GlobalResult.build(500, "删除产品失败",null);
+        }
+        return result;
+    }
+
     @GetMapping("/productName/{productName}")
     @ApiOperation(value = "查看产品详细信息")
     public GlobalResult checkProduct(@PathVariable String productName) {

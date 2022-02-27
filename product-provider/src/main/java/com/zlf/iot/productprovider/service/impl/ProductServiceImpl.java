@@ -69,15 +69,17 @@ public class ProductServiceImpl implements ProductService {
     public  Boolean updateProduct(String productKey,String productName,String productMessage){
         return productMapper.updateProduct(productKey,productName,productMessage);
     }
+
+    @Override
+    public int deleteProducts(List<String> productKeys){
+
+        return productMapper.deleteProducts(productKeys);
+    }
     @Override
     public int getProductCount() {
         return productMapper.getProductCount();
     }
 
-    @Override
-    public List<Product> getAllProduct() {
-        return productMapper.getAllProduct();
-    }
 
 
 }

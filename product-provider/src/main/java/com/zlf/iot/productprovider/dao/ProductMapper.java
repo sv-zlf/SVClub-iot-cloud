@@ -1,9 +1,13 @@
 package com.zlf.iot.productprovider.dao;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.zlf.iot.productprovider.entity.Product;
 import org.apache.ibatis.annotations.*;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,7 +17,7 @@ import java.util.List;
  */
 
 @Mapper
-public interface ProductMapper {
+public interface ProductMapper extends BaseMapper<Product> {
 
     @Insert("insert into product(productName, productKey,productSecret,productType,createTime,productMessage) values(#{productName}, #{productKey},#{productSecret},#{productType},#{createTime},#{productMessage})")
     void createProduct(Product product);
@@ -36,9 +40,17 @@ public interface ProductMapper {
     @Select("select count(*) from product ")
     int getProductCount();
 
-    @Select("select * from product")
-    List<Product> getAllProduct();
 
     @Update("update product set productMessage=#{productMessage},productName=#{productName} where productKey=#{productKey}" )
     Boolean updateProduct(@Param("productKey") String productKey,@Param("productName") String productName,@Param("productMessage") String productMessage);
+
+    @Delete({
+            "<script>",
+            "delete from product where productKey IN",
+            "<foreach collection='list' item='productKeys' open='(' separator=',' close=')'>",
+            "#{productKeys}",
+            "</foreach>",
+            "</script>"
+    })
+    int deleteProducts( List<String> productKeys);
 }
