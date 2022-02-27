@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.zlf.iot.productprovider.entity.Product;
 import org.apache.ibatis.annotations.*;
 
-import java.io.Serializable;
-import java.util.Collection;
+
 import java.util.List;
 
 /**

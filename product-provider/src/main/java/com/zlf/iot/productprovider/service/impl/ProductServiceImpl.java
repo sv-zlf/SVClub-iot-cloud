@@ -34,9 +34,6 @@ public class ProductServiceImpl implements ProductService {
         String productSecret=RandomStringUtils.random(16,str);
         product.setProductSecret(productSecret);
 
-
-        Date date = new Date(System.currentTimeMillis());
-        product.setCreateTime(date);
         productMapper.createProduct(product);
         System.out.println("创建产品");
     }

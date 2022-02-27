@@ -6,6 +6,7 @@ import com.zlf.iot.productprovider.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class ProductController {
     private   GlobalResult result;
 
     @PostMapping("")
-    @ApiOperation(value = "创建产品")
+    @ApiOperation(value = "创建产品",notes = "time、key、Secret可以省略")
     public GlobalResult createProduct(@RequestBody Product product) {
 
         if (productService.getdetail_productName(product.getProductName())!=null) {
@@ -148,6 +149,8 @@ public class ProductController {
         }
         return result;
     }
+
+
 
     @GetMapping("/productName/{productName}")
     @ApiOperation(value = "查看产品详细信息")

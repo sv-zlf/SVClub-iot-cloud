@@ -4,9 +4,11 @@ package com.zlf.iot.productprovider.service.impl;
 import com.zlf.iot.productprovider.dao.DeviceMapper;
 import com.zlf.iot.productprovider.entity.Device;
 import com.zlf.iot.productprovider.service.DeviceService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 /**
  *@Description : TODO
@@ -20,15 +22,41 @@ public class DeviceServiceImpl implements DeviceService {
     @Autowired
     DeviceMapper deviceMapper;
 
-    
+    private  String str = "a0A0b1B2c1C3d2D1e3E2f4F3g5G7h4H6i5Ij4J9k5K6l6Lm7M7n8N8o9Op0PqQrRsStTuUv9VwWxXy8YzZ";
+
     @Override
-    public void createDevice(Device device) {
+    public void createDevice(String deviceName,String productKey ) {
+        Device device=new Device();
+        device.setDeviceName(deviceName);
+        device.setProductKey(productKey);
+
+        String deviceSecret= RandomStringUtils.random(16,str);
+        device.setDeviceSecret(deviceSecret);
+
+        Date date = new Date(System.currentTimeMillis());
+        device.setCreateTime(date);
+        device.setDeviceType("设备");
+        device.setDeviceStatus("未激活");
         deviceMapper.createDevice(device);
     }
 
     @Override
-    public void updateclientId(String deviceName, String clientId) {
-        deviceMapper.updateclientId(deviceName, clientId);
+    public  int deleteDevices(List<String> productKey, List<String> deviceName){
+        return deviceMapper.deleteDevices(productKey,deviceName);
+    }
+
+    @Override
+    public  Boolean deleteDevice_Pro(String productKey){
+        return deviceMapper.deleteDevice_Pro(productKey);
+    }
+    @Override
+    public Boolean updateclientId(String productKey,String deviceName, String clientId) {
+        return deviceMapper.updateclientId(productKey,deviceName, clientId);
+    }
+
+    @Override
+    public Boolean updateStatus(String clientId, String status) {
+        return deviceMapper.updateStatus(clientId, status);
     }
 
     @Override
@@ -36,10 +64,7 @@ public class DeviceServiceImpl implements DeviceService {
         return deviceMapper.autheDevice(deviceName, deviceSecret);
     }
 
-    @Override
-    public void updateStatus(String clientId, String status) {
-        deviceMapper.updateStatus(clientId, status);
-    }
+
 
     @Override
     public int getDeviceCount() {
@@ -62,8 +87,8 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public void deleteDevice(String deviceName, String productKey) {
-        deviceMapper.deleteDevice(deviceName, productKey);
+    public Boolean deleteDevice(String deviceName, String productKey) {
+        return  deviceMapper.deleteDevice(deviceName, productKey);
     }
 
     @Override

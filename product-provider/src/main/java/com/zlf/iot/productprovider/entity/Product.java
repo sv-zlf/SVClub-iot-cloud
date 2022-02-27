@@ -1,8 +1,6 @@
 package com.zlf.iot.productprovider.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.Data;
 
@@ -28,6 +26,7 @@ public class Product {
 
     private String productType;
 
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     private String productMessage;

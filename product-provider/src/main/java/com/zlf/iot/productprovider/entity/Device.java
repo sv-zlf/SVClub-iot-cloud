@@ -1,5 +1,8 @@
 package com.zlf.iot.productprovider.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +15,7 @@ import java.util.Date;
  */
 
 @Data
-
+@TableName("device")
 public class Device {
 
     private String deviceName;
@@ -25,6 +28,7 @@ public class Device {
 
     private String deviceStatus;
 
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     private String clientId;
