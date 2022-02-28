@@ -15,6 +15,7 @@ import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelOutboundInvoker;
 import io.netty.handler.codec.mqtt.*;
 import io.netty.handler.timeout.IdleStateHandler;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
@@ -46,8 +47,10 @@ public final class ConnectHandler extends AbstractMqttTopicSecureHandler {
     final private Boolean enableTopicSubPubSecure;
     private int brokerId;
 
+
     @Autowired
-    DeviceService deviceService;
+    ProFeignService proFeignService;
+
     /**
      * 认证服务
      */
@@ -124,15 +127,13 @@ public final class ConnectHandler extends AbstractMqttTopicSecureHandler {
         //用户名及密码校验
         Authentication auth = null;
         if (variableHeader.hasPassword() && variableHeader.hasUserName()) {
-            auth = authenticationService.authenticate(payload.userName(), payload.password());
+            auth = authenticationService.authenticate(payload.clientIdentifier(),payload.userName(), payload.password());
         }
 
 
         //获取clientId
         String clientId = mcm.payload().clientIdentifier();
-        System.out.println(payload.userName());
 
-        deviceService.updateclientId(payload.userName(), clientId);
         if (StringUtils.isEmpty(clientId)) {
             //[MQTT-3.1.3-8] If the Client supplies a zero-byte ClientId with CleanSession set to 0, the Server MUST
             // respond to the CONNECT Packet with a CONNACK return code 0x02 (Identifier rejected) and then close the
@@ -145,9 +146,10 @@ public final class ConnectHandler extends AbstractMqttTopicSecureHandler {
             //[MQTT-3.1.3-6] A Server MAY allow a Client to supply a ClientId that has a length of zero bytes,
             //however if it does so the Server MUST treat this as a special case and assign a unique ClientId to that Client.
             //It MUST then process the CONNECT packet as if the Client had provided that unique ClientId
-            clientId = genClientId();
+          //  clientId = genClientId();
         }
-
+        clientId = genClientId();
+        proFeignService.updateclientId(payload.clientIdentifier(),payload.userName(),clientId);
         //关闭之前可能存在的tcp链接
         //[MQTT-3.1.4-2] If the ClientId represents a Client already connected to the Server then the Server MUST
         //disconnect the existing Client
@@ -172,7 +174,7 @@ public final class ConnectHandler extends AbstractMqttTopicSecureHandler {
             actionOnCleanSession(clientId);
         }
 
-        deviceService.updateStatus(clientId, "上线");
+        proFeignService.updateStatus(clientId,"上线");
         //新建会话并保存会话，同时判断sessionPresent
         Session session;
         boolean sessionPresent;
@@ -303,6 +305,7 @@ public final class ConnectHandler extends AbstractMqttTopicSecureHandler {
         publishMessageService.clear(clientId);
         pubRelMessageService.clear(clientId);
 
-        deviceService.updateStatus(clientId, "离线");
+        proFeignService.updateStatus(clientId,"离线");
+
     }
 }

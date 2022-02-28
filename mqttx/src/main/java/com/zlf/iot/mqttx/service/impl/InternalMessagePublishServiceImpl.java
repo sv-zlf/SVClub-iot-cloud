@@ -18,6 +18,7 @@ public class InternalMessagePublishServiceImpl implements IInternalMessagePublis
 
     private StringRedisTemplate stringRedisTemplate;
 
+
     public InternalMessagePublishServiceImpl(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
     }

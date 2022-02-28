@@ -1,12 +1,14 @@
 package com.zlf.iot.mqttx.service.impl;
 
 
-import com.zlf.iot.entity.Device;
+import com.zlf.iot.mqttx.common.VO.GlobalResult;
 import com.zlf.iot.mqttx.entity.Authentication;
 import com.zlf.iot.mqttx.exception.AuthenticationException;
 import com.zlf.iot.mqttx.exception.AuthorizationException;
 import com.zlf.iot.mqttx.service.IAuthenticationService;
-import com.zlf.iot.service.DeviceService;
+
+//import org.apache.ibatis.binding.BindingException;
+import com.zlf.iot.mqttx.service.ProFeignService;
 import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,16 +23,17 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements IAuthenticationService {
 
     @Autowired
-    DeviceService deviceService;
+    ProFeignService proFeignService;
 
+    private GlobalResult result;
     @Override
-    public Authentication authenticate(String username, String password) throws AuthenticationException, AuthorizationException {
+    public Authentication authenticate(String productKey,String username, String password) throws AuthenticationException, AuthorizationException {
 
         try {
-            Device device = deviceService.autheDevice(username, password);
-            if (device == null)
-                throw new AuthenticationException("密码校验不通过");
-
+            result=proFeignService.authDevice(productKey,username,password);
+            if (result.getStatus()!=200) {
+                throw new AuthenticationException("密码校验失败");
+            }
         } catch (BindingException e) {
             throw new AuthenticationException("密码校验不通过");
         }

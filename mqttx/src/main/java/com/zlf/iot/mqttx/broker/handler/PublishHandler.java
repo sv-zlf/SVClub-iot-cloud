@@ -1,7 +1,6 @@
 package com.zlf.iot.mqttx.broker.handler;
 
-import com.zlf.iot.entity.Device;
-import com.zlf.iot.entity.Log;
+
 import com.zlf.iot.mqttx.broker.BrokerHandler;
 import com.zlf.iot.mqttx.common.config.BizConfig;
 import com.zlf.iot.mqttx.common.constant.InternalMessageEnum;
@@ -13,8 +12,7 @@ import com.zlf.iot.mqttx.entity.PubMsg;
 import com.zlf.iot.mqttx.exception.AuthorizationException;
 import com.zlf.iot.mqttx.service.*;
 import com.zlf.iot.mqttx.utils.TopicUtils;
-import com.zlf.iot.service.DeviceService;
-import com.zlf.iot.service.LogService;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -42,11 +40,11 @@ import static com.zlf.iot.mqttx.common.constant.ShareStrategy.*;
 @Handler(type = MqttMessageType.PUBLISH)
 public class PublishHandler extends AbstractMqttTopicSecureHandler implements Watcher<PubMsg> {
 
-    @Autowired
-    DeviceService deviceService;
-
-    @Autowired
-    LogService logService;
+//    @Autowired
+//    DeviceService deviceService;
+//
+//    @Autowired
+//    LogService logService;
 
     private IRetainMessageService retainMessageService;
 
@@ -127,15 +125,15 @@ public class PublishHandler extends AbstractMqttTopicSecureHandler implements Wa
         //组装消息
         PubMsg pubMsg = new PubMsg(mqttQoS, packetId, topic, retain, data);
 
-        Device device = deviceService.getDeviceClientId(clientId(ctx));
-        Log log = new Log();
-        log.setDeviceName(device.getDeviceName());
-        log.setMessage(new String(pubMsg.getPayload()));
-        log.setProductKey(device.getProductKey());
-        log.setMessageType("JSON");
-        Date date = new Date(System.currentTimeMillis());
-        log.setTime(date);
-        logService.insertMessage(log);
+//        Device device = deviceService.getDeviceClientId(clientId(ctx));
+//        Log log = new Log();
+//        log.setDeviceName(device.getDeviceName());
+//        log.setMessage(new String(pubMsg.getPayload()));
+//        log.setProductKey(device.getProductKey());
+//        log.setMessageType("JSON");
+//        Date date = new Date(System.currentTimeMillis());
+//        log.setTime(date);
+//        logService.insertMessage(log);
 
         //响应
         switch (mqttQoS) {

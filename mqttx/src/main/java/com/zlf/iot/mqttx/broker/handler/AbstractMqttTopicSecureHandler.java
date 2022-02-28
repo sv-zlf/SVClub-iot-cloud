@@ -16,6 +16,7 @@ import io.netty.channel.ChannelHandlerContext;
 public abstract class AbstractMqttTopicSecureHandler extends AbstractMqttSessionHandler {
 
 
+
     /**
      * client 是否被允许订阅 topic
      *

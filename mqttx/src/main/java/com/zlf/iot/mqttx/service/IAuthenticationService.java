@@ -1,8 +1,8 @@
 package com.zlf.iot.mqttx.service;
 
 import com.zlf.iot.mqttx.entity.Authentication;
-import com.zlf.iot.mqttx.exception.AuthenticationException;
 import com.zlf.iot.mqttx.exception.AuthorizationException;
+import com.zlf.iot.mqttx.exception.AuthenticationException;
 
 /**
  * 客户端认证服务
@@ -20,5 +20,5 @@ public interface IAuthenticationService {
      * @throws AuthenticationException if authenticate failed
      * @throws AuthorizationException  if client
      */
-    Authentication authenticate(String username, String password) throws AuthenticationException, AuthorizationException;
+    Authentication authenticate(String productKey,String username, String password) throws AuthenticationException, AuthorizationException;
 }

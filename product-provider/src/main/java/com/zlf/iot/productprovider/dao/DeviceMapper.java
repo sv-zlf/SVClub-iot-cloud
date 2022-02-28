@@ -45,8 +45,8 @@ public interface DeviceMapper extends BaseMapper<Device> {
     Boolean updateclientId(@Param("productKey") String productKey,@Param("deviceName") String deviceName, @Param("clientId") String clientId);
 
 
-    @Select("select * from device where deviceName = #{deviceName} and deviceSecret=#{deviceSecret}")
-    Device autheDevice(@Param("deviceName") String deviceName, @Param("deviceSecret") String deviceSecret);
+    @Select("select * from device where deviceName = #{deviceName} and deviceSecret=#{deviceSecret} and productKey=#{productKey}")
+    Device autheDevice(@Param("productKey") String productKey,@Param("deviceName") String deviceName, @Param("deviceSecret") String deviceSecret);
 
     @Select("select * from device limit #{start} ,#{pageSize}")
     List<Device> getDevices(@Param("start") int start, @Param("pageSize") int pageSize);

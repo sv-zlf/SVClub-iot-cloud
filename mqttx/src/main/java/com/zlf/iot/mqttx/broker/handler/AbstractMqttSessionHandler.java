@@ -15,6 +15,7 @@ import io.netty.util.AttributeKey;
  */
 public abstract class AbstractMqttSessionHandler implements MqttMessageHandler {
 
+
     public static final String AUTHORIZED_PUB_TOPICS = "authorizedPubTopics";
     public static final String AUTHORIZED_SUB_TOPICS = "authorizedSubTopics";
 

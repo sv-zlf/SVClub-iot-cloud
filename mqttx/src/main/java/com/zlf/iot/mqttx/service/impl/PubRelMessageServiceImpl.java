@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Component
 public class PubRelMessageServiceImpl implements IPubRelMessageService {
 
+
     private StringRedisTemplate stringRedisTemplate;
 
     private String pubRelMsgSetPrefix;

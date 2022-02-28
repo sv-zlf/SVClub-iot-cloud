@@ -191,13 +191,31 @@ public class DeviceController {
             if (devices!=null) {
                 result  = GlobalResult.build(200, "获取指定产品设备信息成功",devices);
             } else {
-                result  = GlobalResult.build(200, "获取指定产品设备信息失败",devices);
+                result  = GlobalResult.build(200, "获取指定产品设备信息失败",null);
             }
         }
         catch (Exception e){
             result  = GlobalResult.build(500, "获取产品设备信息异常",null);
         }
 
+        return result;
+    }
+
+    @GetMapping("/{productKey}/{deviceName}/{deviceSecret}")
+    @ApiOperation(value = "通过三元组授权登陆")
+    public GlobalResult getDevice(@PathVariable String productKey,@PathVariable String deviceName, @PathVariable String deviceSecret) {
+
+        try {
+            Device device=deviceService.authDevice(productKey,deviceName,deviceSecret);
+            if (device!=null) {
+                result  = GlobalResult.build(200, "设备登陆成功",device);
+            } else {
+                result  = GlobalResult.build(500, "设备登陆失败",null);
+            }
+        }
+        catch (Exception e){
+            result  = GlobalResult.build(500, "设备登陆异常",null);
+        }
         return result;
     }
 

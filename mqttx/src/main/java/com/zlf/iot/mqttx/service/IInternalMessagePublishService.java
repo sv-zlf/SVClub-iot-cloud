@@ -11,6 +11,7 @@ import com.zlf.iot.mqttx.entity.InternalMessage;
  */
 public interface IInternalMessagePublishService {
 
+
     /**
      * 发布集群消息
      *

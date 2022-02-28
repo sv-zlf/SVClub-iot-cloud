@@ -17,6 +17,7 @@ public interface IRetainMessageService {
      * @param topic  主题
      * @param pubMsg 发布消息
      */
+
     void save(String topic, PubMsg pubMsg);
 
     /**

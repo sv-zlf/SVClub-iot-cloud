@@ -60,8 +60,8 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Device autheDevice(String deviceName, String deviceSecret) {
-        return deviceMapper.autheDevice(deviceName, deviceSecret);
+    public Device authDevice(String productKey,String deviceName, String deviceSecret) {
+        return deviceMapper.autheDevice(productKey,deviceName, deviceSecret);
     }
 
 

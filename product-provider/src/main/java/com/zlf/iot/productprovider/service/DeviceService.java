@@ -89,8 +89,20 @@ public interface DeviceService {
      **/
     Device getDevice(String deviceName, String productKey);
 
+    /**
+     * @Description: 通过clientI获取设备信息
+     * @Date: 2022/2/28 9:35 下午
+     * @Param clientId:
+     **/
     Device getDeviceClientId(String clientId);
 
-    Device autheDevice(String deviceName, String deviceSecret);
-
+    /**
+     * @Description: 通过密钥三元组登陆设备
+     * @Date: 2022/2/28 9:32 下午
+     * @Param productKey: 产品密钥
+     * @Param deviceName: 设备名字
+     * @Param deviceSecret: 设备密钥
+     * @return
+     **/
+    Device authDevice(String productKey,String deviceName, String deviceSecret);
 }
